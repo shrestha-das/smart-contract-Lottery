@@ -45,18 +45,18 @@ contract HelperConfig is Script, CodeConstants {
     }
 
     function getConfig() public returns (NetworkConfig memory) {
-        return getConfigByChainId(block.chainId);
+        return getConfigByChainId(block.chainid);
     }
 
     function getSeploiaEthConfig() public pure returns(NetworkConfig memory) {
-        return NetworkConfig{
+        return NetworkConfig({
             entranceFee: 0.01 ether, // 1e16
             interval: 30, // 30 seconds
             vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
             gasLane: 0x8077df514608a09f83e4e8d300645594e5d7234665448ba83f51a50f842bd3d9,
             subscriptionId: 0,
-            callbackGasLimit: 500000,
-        }
+            callbackGasLimit: 500000
+        });
     }
 
     function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
@@ -66,17 +66,17 @@ contract HelperConfig is Script, CodeConstants {
         }
 
         vm.startBroadcast();
-        VRFCoordinatorV2_5Mock  newVRFCoordinatorV2_5Mock = new newVRFCoordinatorV2_5Mock(MOCK_BASE_FEE, MOCK_GAS_PRICE_LINK, MOCK_WEI_PER_UINT_LINK);
+        VRFCoordinatorV2_5Mock  newVRFCoordinatorV2_5Mock = new VRFCoordinatorV2_5Mock(MOCK_BASE_FEE, MOCK_GAS_PRICE_LINK, MOCK_WEI_PER_UINT_LINK);
         vm.stopBroadcast();
 
-        localNetworkConfig = NetworkConfig{
+        localNetworkConfig = NetworkConfig({
             entranceFee: 0.01 ether, // 1e16
             interval: 30, // 30 seconds
             vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
             // doesn't matter
             gasLane: 0x8077df514608a09f83e4e8d300645594e5d7234665448ba83f51a50f842bd3d9,
             subscriptionId: 0,
-            callbackGasLimit: 500000, // * we might have to fix this one
-        }        
+            callbackGasLimit: 500000 // * we might have to fix this one
+        });        
     }
 }
